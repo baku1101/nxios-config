@@ -127,6 +127,18 @@
 
   environment.variables.EDITOR = "vim";
 
+  # capsLockをctrlに変更する設定
+  services.xserver.xkbOptions = "ctrl:nocaps";
+  
+  # GNOMEの設定を上書き
+  services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
+    [org.gnome.desktop.input-sources]
+    xkb-options=['ctrl:nocaps']
+  '';
+
+
+
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;

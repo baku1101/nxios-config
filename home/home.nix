@@ -1,14 +1,14 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
-  home = rec {
+  home = {
     # recでAttribute Set内で他の値を参照できるようにする
     username = "watanabe";
-    homeDirectory = "/home/${username}"; # 文字列に値を埋め込む
+    homeDirectory = "/home/watanabe"; # 文字列に値を埋め込む
     stateVersion = "24.11";
   };
   programs.home-manager.enable = true; # home-manager自身でhome-managerを有効化
 
-  packages = with pkgs; [
+  home.packages = with pkgs; [
     # Utilities
     bat # cat alternative
     bottom # top alternative
@@ -52,7 +52,7 @@
     tty-clock
 
     # Joke
-    cowsay
+    #cowsay
     figlet
     lolcat
     pingu
@@ -60,5 +60,39 @@
     #qemu
     qemu
 
+    neovim
+    zsh
+    fish
+    nushell
+
+    vivaldi
+
   ];
+
+  # input method
+  i18n.inputMethod = {
+    enabled = "fcitx5";
+    fcitx5.addons = with pkgs; [
+      fcitx5-mozc
+      fcitx5-gtk
+      fcitx5-configtool
+    ];
+  };
+
+  home.sessionVariables = {
+    GTK_IM_MODULE = "fcitx";
+    QT_IM_MODULE = "fcitx";
+    XMODIFIERS = "@im=fcitx";
+    GLFW_IM_MODULE = "ibus";  # Kittyなどのターミナル用
+  };
+
+  home.keyboard = {
+    options = [ "ctrl:nocaps" ];
+  };
+  dconf.settings = {
+  "org.gnome.desktop.input-sources" = {
+    xkb-options = ["ctrl:nocaps"];
+  };
+};
+
 }
