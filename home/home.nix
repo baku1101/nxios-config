@@ -36,6 +36,7 @@
     yazi # file manager
     htop
     graphviz
+    direnv
 
     # Archives
     unar
@@ -66,7 +67,9 @@
     nushell
 
     vivaldi
+    ghostty
 
+    lunarvim
   ];
 
   # input method
