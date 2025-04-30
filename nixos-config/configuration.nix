@@ -20,9 +20,25 @@
     };
   };
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    # systemd-boot を無効にする
+    systemd-boot.enable = false;
+    grub = {
+      # GRUB を有効にする
+      enable = true;
+      # Windowsを見つける
+      useOSProber = true;
+      # UEFI インストール (nodev 設定)
+      devices = [ "nodev" ];
+      efiSupport = true;
+    };
+    efi = {
+      # NixOS ESP のマウントポイント
+      efiSysMountPoint = "/boot";
+      # UEFI ブート変数へのアクセスを許可 (GRUB側で必要)
+      canTouchEfiVariables = true;
+    };
+  };
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -165,5 +181,6 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.11"; # Did you read the comment?
+
 
 }
