@@ -8,6 +8,8 @@
   };
   programs.home-manager.enable = true; # home-manager自身でhome-managerを有効化
 
+  fonts.fontconfig.enable = true;
+
   home.packages = with pkgs; [
     # Utilities
     bat # cat alternative
@@ -68,8 +70,20 @@
 
     vivaldi
     ghostty
-
     lunarvim
+    starship
+
+    #fonts
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-emoji
+    nerd-fonts.fira-code
+
+    discord
+    discord-ptb
+
+    vscode
+
   ];
 
   # input method
@@ -93,9 +107,9 @@
     options = [ "ctrl:nocaps" ];
   };
   dconf.settings = {
-  "org.gnome.desktop.input-sources" = {
-    xkb-options = ["ctrl:nocaps"];
+    "org.gnome.desktop.input-sources" = {
+      xkb-options = ["ctrl:nocaps"];
+    };
   };
-};
 
 }
