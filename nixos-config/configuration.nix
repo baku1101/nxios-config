@@ -20,6 +20,8 @@
     };
   };
 
+  nixpkgs.config.allowBroken = true;
+
   boot.loader = {
     # systemd-boot を無効にする
     systemd-boot.enable = false;
@@ -72,12 +74,21 @@
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  #services.xserver.displayManager.gdm.enable = true;
+  #services.xserver.desktopManager.gnome.enable = true;
+
+  services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.desktopManager.budgie.enable = true;
+  #services.desktopManager.cosmic.enable = true;
+  #services.displayManager.cosmic-greeter.enable = true;
+
 
   # Configure keymap in X11
   services.xserver = {
     layout = "us";
+    xkb = {
+      options = "ctrl:nocaps";
+    };
     xkbVariant = "";
   };
 
@@ -180,7 +191,7 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.11"; # Did you read the comment?
+  system.stateVersion = "25.05"; # Did you read the comment?
 
 
 }

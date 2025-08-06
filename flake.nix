@@ -10,6 +10,12 @@
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs"; # set same version of nixpkgs
     };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      #inputs.nixpkgs.follows = "nixpkgs"; # set same version of nixpkgs
+    };
+    # ある程度まとまったらgithubのurl二変更
+    kickstart-nixvim.url = "path:/home/watanabe/.dotfiles/home/kickstart.nixvim";
   };
 
   outputs =
@@ -18,6 +24,8 @@
       home-manager,
       nixos-hardware,
       fenix,
+      nixvim,
+      kickstart-nixvim,
       ...
     }:
     {
@@ -37,7 +45,7 @@
                 "rust-src"
                 "rustc"
                 "rustfmt"
-		"rust-analyzer"
+                "rust-analyzer"
               ])
             ];
           })
@@ -45,6 +53,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.watanabe = import ./home/home.nix;
+            home-manager.extraSpecialArgs = { inherit nixvim kickstart-nixvim; };
           }
         ];
       };
