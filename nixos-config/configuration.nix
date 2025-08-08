@@ -9,7 +9,11 @@
     # Include the results of the hardware scan.
     # <nixos-hardware/lenovo/thinkpad/e14/intel>
     ./hardware-configuration.nix
+    ./hyprland.nix
   ];
+
+  users.defaultUserShell = pkgs.zsh;
+  programs.zsh.enable = true;
 
   nix = {
     settings = {
@@ -55,6 +59,15 @@
   # Set your time zone.
   time.timeZone = "Asia/Tokyo";
 
+  # Enable input method
+  i18n.inputMethod = {
+    enabled = "fcitx5";
+    fcitx5.addons = with pkgs; [
+      fcitx5-mozc
+      fcitx5-gtk
+    ];
+  };
+
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
@@ -77,8 +90,8 @@
   #services.xserver.displayManager.gdm.enable = true;
   #services.xserver.desktopManager.gnome.enable = true;
 
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.budgie.enable = true;
+  #services.xserver.displayManager.lightdm.enable = true;
+  #services.xserver.desktopManager.budgie.enable = true;
   #services.desktopManager.cosmic.enable = true;
   #services.displayManager.cosmic-greeter.enable = true;
 
@@ -94,6 +107,10 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+
+  # Enable Bluetooth
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
@@ -122,9 +139,6 @@
       "networkmanager"
       "wheel"
     ];
-    packages = with pkgs; [
-      #  thunderbird
-    ];
   };
 
   # Enable automatic login for the user.
@@ -150,6 +164,8 @@
     vim
     wget
     curl
+    bluez
+    bluez-tools
   ];
 
   environment.variables.EDITOR = "vim";

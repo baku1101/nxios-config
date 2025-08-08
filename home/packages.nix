@@ -82,6 +82,7 @@
     gemini-cli
 
     uv
+    wofi
 
   ];
 }

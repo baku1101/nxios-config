@@ -5,6 +5,14 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     fenix = {
       url = "github:nix-community/fenix";
@@ -22,6 +30,8 @@
     {
       nixpkgs,
       home-manager,
+      hyprland,
+      hyprland-plugins,
       nixos-hardware,
       fenix,
       nixvim,
@@ -34,10 +44,18 @@
         system = "x86_64-linux";
         modules = [
           ./nixos-config/configuration.nix
+          hyprland.nixosModules.default
           nixos-hardware.nixosModules.lenovo-thinkpad-e14-intel
           home-manager.nixosModules.home-manager
           ({ pkgs, ... }: {
-            nixpkgs.overlays = [ fenix.overlays.default ];
+            nixpkgs.overlays = [
+              fenix.overlays.default
+              (final: prev: {
+                hyprland-plugins = {
+                  hyprbars = hyprland-plugins.packages.${prev.system}.hyprbars;
+                };
+              })
+            ];
             environment.systemPackages = with pkgs; [
               (pkgs.fenix.stable.withComponents [
                 "cargo"
@@ -53,7 +71,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.watanabe = import ./home/home.nix;
-            home-manager.extraSpecialArgs = { inherit nixvim kickstart-nixvim; };
+            home-manager.extraSpecialArgs = { inherit nixvim kickstart-nixvim hyprland; };
           }
         ];
       };

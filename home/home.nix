@@ -6,6 +6,7 @@
     ./starship.nix
     ./input-method.nix
     ./dconf.nix
+    ./wm/hyprland/default.nix
     nixvim.homeManagerModules.nixvim
     ./nixvim/default.nix
     #kickstart-nixvim.homeManagerModules.default
