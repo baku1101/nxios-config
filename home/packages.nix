@@ -44,11 +44,6 @@
     pfetch
     tty-clock
 
-    # Joke
-    #cowsay
-    figlet
-    lolcat
-
     qemu
 
     zsh
@@ -64,7 +59,8 @@
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-emoji
-    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
+    source-han-code-jp
 
     discord
     discord-ptb
@@ -82,7 +78,13 @@
     gemini-cli
 
     uv
-    wofi
 
+    # require hyprland
+    pipewire #画面共有
+    wireplumber
+    swayidle
+
+    # cursor
+    bibata-cursors
   ];
 }

@@ -1,6 +1,7 @@
-{ pkgs,nixvim,kickstart-nixvim, ... }:
+{ pkgs, inputs, nixvim, hyprland, ... }:
 {
   imports = [
+    inputs.ags.homeManagerModules.default
     ./packages.nix
     ./zsh.nix
     ./starship.nix
@@ -9,8 +10,13 @@
     ./wm/hyprland/default.nix
     nixvim.homeManagerModules.nixvim
     ./nixvim/default.nix
-    #kickstart-nixvim.homeManagerModules.default
   ];
+
+  home.pointerCursor = {
+    name = "Bibata-Modern-Classic";
+    package = pkgs.bibata-cursors;
+    size = 24;
+  };
 
   home = {
     # recでAttribute Set内で他の値を参照できるようにする
@@ -20,7 +26,16 @@
   };
   programs.home-manager.enable = true; # home-manager自身でhome-managerを有効化
 
-  fonts.fontconfig.enable = true;
+  programs.ghostty = {
+    enable = true;
+    settings = {
+      # 英数字はJetBrains Monoに担当させる
+      font-family = "JetBrainsMonoNL Nerd Font Mono";
+      font-feature = "-dlig";
+      font-size = "12";
+    };
+  };
+
 
   programs.nixvim.enable = true;
 }

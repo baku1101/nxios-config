@@ -13,6 +13,9 @@
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
+    ags = {
+      url = "github:Aylur/ags";
+    };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     fenix = {
       url = "github:nix-community/fenix";
@@ -22,22 +25,9 @@
       url = "github:nix-community/nixvim";
       #inputs.nixpkgs.follows = "nixpkgs"; # set same version of nixpkgs
     };
-    # ある程度まとまったらgithubのurl二変更
-    kickstart-nixvim.url = "path:/home/watanabe/.dotfiles/home/kickstart.nixvim";
   };
 
-  outputs =
-    {
-      nixpkgs,
-      home-manager,
-      hyprland,
-      hyprland-plugins,
-      nixos-hardware,
-      fenix,
-      nixvim,
-      kickstart-nixvim,
-      ...
-    }:
+  outputs = { self, nixpkgs, home-manager, hyprland, hyprland-plugins, nixos-hardware, fenix, nixvim, ags, ... }@inputs:
     {
       packages.x86_64-linux.default = fenix.packages.x86_64-linux.minimal.toolchain;
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
@@ -71,7 +61,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.watanabe = import ./home/home.nix;
-            home-manager.extraSpecialArgs = { inherit nixvim kickstart-nixvim hyprland; };
+            home-manager.extraSpecialArgs = { inherit inputs nixvim hyprland; };
           }
         ];
       };

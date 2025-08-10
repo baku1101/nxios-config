@@ -61,7 +61,8 @@
 
   # Enable input method
   i18n.inputMethod = {
-    enabled = "fcitx5";
+    enable = true;
+    type = "fcitx5";
     fcitx5.addons = with pkgs; [
       fcitx5-mozc
       fcitx5-gtk
@@ -99,9 +100,6 @@
   # Configure keymap in X11
   services.xserver = {
     layout = "us";
-    xkb = {
-      options = "ctrl:nocaps";
-    };
     xkbVariant = "";
   };
 
@@ -169,18 +167,6 @@
   ];
 
   environment.variables.EDITOR = "vim";
-
-  # capsLockをctrlに変更する設定
-  services.xserver.xkbOptions = "ctrl:nocaps";
-  
-  # GNOMEの設定を上書き
-  services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
-    [org.gnome.desktop.input-sources]
-    xkb-options=['ctrl:nocaps']
-  '';
-
-
-
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
