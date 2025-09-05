@@ -38,27 +38,37 @@
     zplug = {
       enable = true;
       plugins = [
-	{name = "zsh-users/zsh-autosuggestions";}	
-	{name = "zsh-users/zsh-history-substring-search";}	
-	{name = "zsh-users/zsh-syntax-highlighting";}	
-	{name = "zsh-users/zsh-completions";}	
-	{
-	  name = "mafredri/zsh-async";
-	  tags = ["from:github" "use:async.zsh"];
-	}
-	{name = "hlissner/zsh-autopair"; tags = ["defer:2"];}	
+        { name = "zsh-users/zsh-autosuggestions"; }
+        { name = "zsh-users/zsh-history-substring-search"; }
+        { name = "zsh-users/zsh-syntax-highlighting"; }
+        { name = "zsh-users/zsh-completions"; }
+        {
+          name = "mafredri/zsh-async";
+          tags = [
+            "from:github"
+            "use:async.zsh"
+          ];
+        }
+        {
+          name = "hlissner/zsh-autopair";
+          tags = [ "defer:2" ];
+        }
       ];
     };
 
     shellAliases = {
-      ls="eza --icons=auto --git --git-repos --group-directories-first --sort=name --time-style=long-iso -hi --hyperlink -F always";
+      ls = "eza --icons=auto --git --git-repos --group-directories-first --sort=name --time-style=long-iso -hi --hyperlink -F always";
       edit = "sudo -e";
-      update = "sudo nixos-rebuild switch --flake .#nixos";
+      update = "cd ~/.dotfiles/ && git add . && sudo nixos-rebuild switch --flake .#nixos && cd -";
     };
 
     history.size = 10000;
     history.ignoreAllDups = true;
     history.path = "$HOME/.zsh_history";
-    history.ignorePatterns = ["rm *" "pkill *" "cp *"];
+    history.ignorePatterns = [
+      "rm *"
+      "pkill *"
+      "cp *"
+    ];
   };
 }

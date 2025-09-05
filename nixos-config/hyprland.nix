@@ -1,3 +1,5 @@
+{ pkgs, ... }:
+
 {
   programs.hyprland = {
     enable = true;
@@ -9,4 +11,6 @@
     power-profiles-daemon.enable = true;
   };
   services.xserver.enable = true;
+
+  xdg.portal.enable = true;
 }

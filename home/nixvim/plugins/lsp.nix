@@ -1,14 +1,14 @@
 {
   # Useful status updates for LSP.
   # https://nix-community.github.io/nixvim/plugins/fidget/index.html
-  programs.nixvim.plugins.fidget = {
+  plugins.fidget = {
     enable = true;
   };
 
   # A plugin that properly configures LuaLS for editing your Neovim config
   #  by lazily updating your workspace libraries.
   #  https://nix-community.github.io/nixvim/plugins/lazydev/index.html
-  programs.nixvim.plugins.lazydev = {
+  plugins.lazydev = {
     enable = true; # autoEnableSources not enough
     settings = {
       library = [
@@ -46,7 +46,7 @@
   # and elegantly composed help section, `:help lsp-vs-treesitter`
   #
   # https://nix-community.github.io/nixvim/plugins/lsp/index.html
-  programs.nixvim.plugins.lsp = {
+  plugins.lsp = {
     enable = true;
 
     # Enable the following language servers
@@ -59,18 +59,18 @@
     #  - settings: Override the default settings passed when initializing the server.
     #        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
     servers = {
-       clangd = {
-         enable = true;
-       };
-       gopls = {
-         enable = true;
-       };
-       pyright = {
-         enable = true;
-       };
-       rust_analyzer = {
-         enable = true;
-       };
+      clangd = {
+        enable = true;
+      };
+      gopls = {
+        enable = true;
+      };
+      pyright = {
+        enable = true;
+      };
+      rust_analyzer = {
+        enable = true;
+      };
       # ...etc. See `https://nix-community.github.io/nixvim/plugins/lsp` for a list of pre-configured LSPs
       #
       # Some languages (like typscript) have entire language plugins that can be useful:
@@ -115,6 +115,8 @@
           action = "setloclist";
           desc = "Open diagnostic [Q]uickfix list";
         };
+        "g]" = "goto_next";
+        "g[" = "goto_prev";
       };
 
       extra = [

@@ -8,12 +8,12 @@
       monitor = ",preferred,auto-left,1";
 
       exec-once = [
-	"hyprpanel"
+        "hyprpanel"
         "fcitx5 -d"
-	"hyprlock"
+        "hyprlock"
         "wl-paste --type text --watch cliphist store"
         "wl-paste --type image --watch cliphist store"
-        "swayidle -w timeout 300 'hyprlock' timeout 600 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on'"
+
       ];
 
       input = {
@@ -31,8 +31,8 @@
 
         sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
 
-	repeat_delay = 300;
-	repeat_rate = 35;
+        repeat_delay = 300;
+        repeat_rate = 35;
       };
 
       general = {
@@ -52,9 +52,9 @@
           size = 3;
           passes = 1;
         };
-	shadow = {
-	  enabled = true;
-	};
+        shadow = {
+          enabled = true;
+        };
       };
 
       animations = {
@@ -100,6 +100,10 @@
         "$mainMod, right, movefocus, r"
         "$mainMod, up, movefocus, u"
         "$mainMod, down, movefocus, d"
+
+        # Move workspace to another monitor
+        "$mainMod CTRL, left, movecurrentworkspacetomonitor, +1"
+        "$mainMod CTRL, right, movecurrentworkspacetomonitor, -1"
 
         "$mainMod SHIFT, left, swapwindow, l"
         "$mainMod SHIFT, right, swapwindow, r"

@@ -26,6 +26,8 @@
     tokei # analyze code statistics
     typos # find typos
     yazi # file manager
+    spacedrive # GUI file manager
+    # libsForQt5.okular # pdf viewer
     htop
     graphviz
     direnv
@@ -80,9 +82,9 @@
     uv
 
     # require hyprland
-    pipewire #画面共有
+    pipewire # 画面共有
     wireplumber
-    swayidle
+    hypridle
 
     # cursor
     bibata-cursors

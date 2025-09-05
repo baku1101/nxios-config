@@ -26,6 +26,11 @@
   };
   programs.home-manager.enable = true; # home-manager自身でhome-managerを有効化
 
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
+
   programs.ghostty = {
     enable = true;
     settings = {

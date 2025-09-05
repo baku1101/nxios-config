@@ -11,12 +11,14 @@
   #
   # A snippet engine for Neovim
   #  https://nix-community.github.io/nixvim/plugins/luasnip/index.html
-  programs.nixvim.plugins.luasnip.enable = true; # autoEnableSources not enough
+  plugins.luasnip.enable = true; # autoEnableSources not enough
+  plugins.blink-copilot.enable = true;
+  plugins.blink-cmp-copilot.enable = true;
 
   # Autocompletion
   # See `:help cmp`
   # https://nix-community.github.io/nixvim/plugins/cmp/index.html
-  programs.nixvim.plugins.blink-cmp = {
+  plugins.blink-cmp = {
     enable = true;
 
     settings = {
@@ -70,11 +72,30 @@
           "path"
           "snippets"
           "lazydev"
+          "buffer"
+          "copilot"
         ];
         providers = {
           lazydev = {
             module = "lazydev.integrations.blink";
             score_offset = 100;
+          };
+          copilot = {
+            async = true;
+            module = "blink-cmp-copilot";
+            name = "copilot";
+            score_offset = 100;
+            # Optional configurations
+            opts = {
+              max_completions = 3;
+              max_attempts = 4;
+              kind = "Copilot";
+              debounce = 750;
+              auto_refresh = {
+                backward = true;
+                forward = true;
+              };
+            };
           };
         };
       };

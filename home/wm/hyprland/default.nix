@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
+   ./hypridle.nix
    ./hyprpanel.nix
    ./settings.nix
    ./hyprlock.nix
