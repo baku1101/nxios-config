@@ -148,6 +148,9 @@
 
         # Clipboard History
         "$mainMod, V, exec, cliphist list | wofi --dmenu | cliphist decode | wl-copy"
+
+        # Screen recording toggle
+        "$mainMod SHIFT, R, exec, toggle-recorder"
       ];
 
       bindm = [
