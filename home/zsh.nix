@@ -60,6 +60,7 @@
       ls = "eza --icons=auto --git --git-repos --group-directories-first --sort=name --time-style=long-iso -hi --hyperlink -F always";
       edit = "sudo -e";
       update = "cd ~/.dotfiles/ && git add . && sudo nixos-rebuild switch --flake .#nixos && cd -";
+      upgrade = "cd ~/.dotfiles/ && git add . && sudo nix flake update && sudo nixos-rebuild switch --flake .#nixos && cd -";
     };
 
     history.size = 10000;

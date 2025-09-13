@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, lib, ... }:
 {
   home.packages = with pkgs; [
     power-profiles-daemon
@@ -28,7 +28,9 @@
                 "dashboard"
                 "workspaces"
                 "windowtitle"
-                "updates"
+                "custom/recording-idle"
+                "custom/recording-active"
+                "custom/vulstat"
                 "storage"
               ]
               ++ (if showBattery then [ "battery" ] else [ ]);
@@ -58,7 +60,7 @@
           "2" = layout { };
           "3" = layout { };
         };
-      bar.customModules.updates.pollingInterval = 1440000;
+
       theme.name = "catppuccin_mocha";
       theme.bar.floating = false;
       theme.bar.buttons.enableBorders = true;
@@ -78,12 +80,80 @@
       menus.dashboard.shortcuts.right.shortcut1.command = "${pkgs.gcolor3}/bin/gcolor3";
       menus.media.displayTime = true;
       menus.power.lowBatteryNotification = true;
-      bar.customModules.updates.updateCommand = "jq '[.[].cvssv3_basescore | to_entries | add | select(.value > 5)] | length' <<< $(vulnix -S --json)";
-      bar.customModules.updates.icon.updated = "󰋼";
-      bar.customModules.updates.icon.pending = "󰋼";
       bar.volume.rightClick = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
       bar.volume.middleClick = "pavucontrol";
       bar.media.format = "{title}";
     };
   };
+
+  # modules.json の生成と配置
+  xdg.configFile."hyprpanel/modules.json".source = pkgs.writeText "modules.json" (
+    builtins.toJSON {
+      "custom/recording-idle" = {
+        icon = "";
+        label = "{}";
+        execute = ''
+          if ! ${pkgs.procps}/bin/pgrep -x wf-recorder > /dev/null; then
+            echo "OFF"
+          else
+            echo ""
+          fi
+        '';
+        interval = 100;
+        hideOnEmpty = true;
+        actions = {
+          onLeftClick = "toggle-recorder";
+        };
+      };
+      "custom/recording-active" = {
+        icon = "";
+        label = "{}";
+        execute = ''
+          if ${pkgs.procps}/bin/pgrep -x wf-recorder > /dev/null; then
+            echo "REC"
+          else
+            echo ""
+          fi
+        '';
+        interval = 100;
+        hideOnEmpty = true;
+        actions = {
+          onLeftClick = "toggle-recorder";
+        };
+      };
+      "custom/vulstat" = {
+        icon = "󰋼"; # vulnixのアイコン
+        label = "{}"; # JSON出力の場合
+        execute = "jq '[.[].cvssv3_basescore | to_entries | add | select(.value > 5)] | length' <<< $(vulnix -S --json)";
+        interval = 10000;
+      };
+    }
+  );
+
+  # Custom module styles
+  xdg.configFile."hyprpanel/modules.scss".text = ''
+    @include styleModule(
+      'cmodule-recording-idle',
+      (
+        'icon-color': #CDD6F4, // Catppuccin Text
+        'text-color': #CDD6F4 // Catppuccin Text
+      )
+    );
+    @include styleModule(
+      'cmodule-recording-active',
+      (
+        'text-color': #F38BA8, // Catppuccin Red
+        'icon-color': #F38BA8
+      )
+    );
+    @include styleModule(
+      'cmodule-vulstat',
+      (
+        'text-color': #FAB387, // Catppuccin Peach
+        'icon-color': #FAB387
+      )
+    );
+  '';
+
+  
 }
