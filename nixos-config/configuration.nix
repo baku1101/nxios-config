@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   imports = [
@@ -24,6 +24,12 @@
     };
   };
 
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
+  };
+
   nixpkgs.config.allowBroken = true;
 
   boot.loader = {
@@ -32,6 +38,7 @@
     grub = {
       # GRUB を有効にする
       enable = true;
+      configurationLimit = 10;
       # Windowsを見つける
       useOSProber = true;
       # UEFI インストール (nodev 設定)
@@ -66,7 +73,9 @@
     fcitx5.addons = with pkgs; [
       fcitx5-mozc
       fcitx5-gtk
+      kdePackages.fcitx5-qt
     ];
+    fcitx5.waylandFrontend = true;
   };
 
   # Select internationalisation properties.
@@ -96,7 +105,6 @@
   #services.desktopManager.cosmic.enable = true;
   #services.displayManager.cosmic-greeter.enable = true;
 
-
   # Configure keymap in X11
   services.xserver = {
     layout = "us";
@@ -109,6 +117,20 @@
   # Enable Bluetooth
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
+
+  hardware.graphics = {
+    enable = true;
+    extraPackages = lib.mkForce (with pkgs; [
+      intel-media-driver
+      intel-vaapi-driver
+      libva-vdpau-driver
+      libvdpau-va-gl
+    ]);
+    extraPackages32 = lib.mkForce (with pkgs.pkgsi686Linux; [
+      intel-vaapi-driver
+      libvdpau-va-gl
+    ]);
+  };
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
@@ -194,6 +216,5 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
-
 
 }

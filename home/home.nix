@@ -1,4 +1,10 @@
-{ pkgs, inputs, nixvim, hyprland, ... }:
+{
+  pkgs,
+  inputs,
+  nixvim,
+  hyprland,
+  ...
+}:
 {
   imports = [
     inputs.ags.homeManagerModules.default
@@ -7,6 +13,7 @@
     ./starship.nix
     ./input-method.nix
     ./dconf.nix
+    ./rust.nix
     ./wm/hyprland/default.nix
     nixvim.homeManagerModules.nixvim
     ./nixvim/default.nix
@@ -40,7 +47,6 @@
       font-size = "12";
     };
   };
-
 
   programs.nixvim.enable = true;
 }

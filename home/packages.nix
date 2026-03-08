@@ -4,7 +4,7 @@
     # Utilities
     bat # cat alternative
     bottom # top alternative
-    du-dust # du alternative
+    dust # du alternative
     duf # df alternative
     eza # ls alternative
     fd # find alternative
@@ -21,12 +21,13 @@
     nurl # generate nix fetcher
     procs # ps alternative
     ripgrep # grep alternative
-    silicon # code to image
     speedtest-cli # speedtest
     tokei # analyze code statistics
     typos # find typos
+    nodePackages.markdownlint-cli # for markdown linting
     yazi # file manager
     spacedrive # GUI file manager
+    xclip # clipboard manager
     # libsForQt5.okular # pdf viewer
     htop
     graphviz
@@ -40,7 +41,6 @@
 
     # Rice
     cava
-    neofetch
     fastfetch
     nitch
     pfetch
@@ -57,10 +57,12 @@
     lunarvim
     starship
 
+    zoom-us
+
     #fonts
     noto-fonts
     noto-fonts-cjk-sans
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     nerd-fonts.jetbrains-mono
     source-han-code-jp
 
@@ -77,7 +79,8 @@
 
     gnumake
 
-    gemini-cli
+    # gemini-cli
+    codex
 
     uv
 

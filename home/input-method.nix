@@ -7,7 +7,7 @@
     fcitx5.addons = with pkgs; [
       fcitx5-mozc
       fcitx5-gtk
-      fcitx5-configtool
+      qt6Packages.fcitx5-configtool
       kdePackages.fcitx5-qt
     ];
     fcitx5.waylandFrontend = true;
