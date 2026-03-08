@@ -13,6 +13,7 @@
     ./starship.nix
     ./input-method.nix
     ./dconf.nix
+    ./codex.nix
     ./rust.nix
     ./wm/hyprland/default.nix
     nixvim.homeModules.nixvim
@@ -45,6 +46,8 @@
       font-family = "JetBrainsMonoNL Nerd Font Mono";
       font-feature = "-dlig";
       font-size = "12";
+      bell-features = "attention,title,no-border";
+      bell-audio-path = "${pkgs.sound-theme-freedesktop}/share/sounds/freedesktop/stereo/bell.oga";
     };
   };
 
