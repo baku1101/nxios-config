@@ -2,6 +2,15 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
+    completionInit = ''
+      zcompdump_path=''${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-$ZSH_VERSION
+      mkdir -p "''${zcompdump_path:h}"
+      if [[ -s "$zcompdump_path" ]]; then
+        autoload -U compinit && compinit -C -d "$zcompdump_path"
+      else
+        autoload -U compinit && compinit -d "$zcompdump_path"
+      fi
+    '';
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     siteFunctions = {
@@ -12,6 +21,11 @@
       '';
 
     };
+    initExtraBeforeCompInit = ''
+      if [ -n "$ZSH_PROFILE" ]; then
+        zmodload zsh/zprof
+      fi
+    '';
     initContent = ''
       # --------------------------------------------------
       # fzf history 🚀
@@ -30,31 +44,13 @@
       # --------------------------------------------------
       # Zsh Completion Styling 🎨
       # --------------------------------------------------
-      # 補完機能を有効化
-      autoload -U compinit && compinit
       # 補完候補に色を付ける
       zstyle ':completion:*' list-colors 'di=1;34:ln=1;35:ex=1;31'
+
+      if [ -n "$ZSH_PROFILE" ]; then
+        zprof
+      fi
     '';
-    zplug = {
-      enable = true;
-      plugins = [
-        { name = "zsh-users/zsh-autosuggestions"; }
-        { name = "zsh-users/zsh-history-substring-search"; }
-        { name = "zsh-users/zsh-syntax-highlighting"; }
-        { name = "zsh-users/zsh-completions"; }
-        {
-          name = "mafredri/zsh-async";
-          tags = [
-            "from:github"
-            "use:async.zsh"
-          ];
-        }
-        {
-          name = "hlissner/zsh-autopair";
-          tags = [ "defer:2" ];
-        }
-      ];
-    };
 
     shellAliases = {
       ls = "eza --icons=auto --git --git-repos --group-directories-first --sort=name --time-style=long-iso -hi --hyperlink -F always";
