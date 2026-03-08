@@ -43,10 +43,16 @@
       };
     };
 
-    opts = {  
-      number = true;  
-      relativenumber = true;  
-      shiftwidth = 2;  
-    };  
+    clipboard.providers = {
+      wl-copy.enable = true;
+      xclip.enable = true;
+    };
+
+    opts = {
+      number = true;
+      relativenumber = true;
+      shiftwidth = 2;
+      clipboard = "unnamedplus";
+    };
   };
 }

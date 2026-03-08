@@ -22,5 +22,14 @@
       key = "<esc><esc>";
       action = "<cmd>nohlsearch<CR>";
     }
+    {
+      mode = "n";
+      key = "x";
+      action = "\"_x";
+      options = {
+        noremap = true;
+        silent = true;
+      };
+    }
   ];
 }
