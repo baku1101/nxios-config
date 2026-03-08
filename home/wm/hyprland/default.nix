@@ -29,7 +29,14 @@
     executable = true;
     text = ''
       #!/bin/sh
+      STATUS_FILE="''${XDG_RUNTIME_DIR:-/tmp}/wf-recorder.status"
+
+      set_status() {
+          printf '%s\n' "$1" > "$STATUS_FILE"
+      }
+
       if pgrep -x wf-recorder > /dev/null; then
+          set_status '{"status":"OFF","alt":"idle"}'
           pkill -SIGINT wf-recorder
       else
           # Get the name of the monitor with the active workspace
@@ -42,7 +49,26 @@
 
           VIDEO_DIR=$(xdg-user-dir VIDEOS)
           mkdir -p "$VIDEO_DIR"
+          set_status '{"status":"REC","alt":"recording"}'
+          cleanup() {
+              set_status '{"status":"OFF","alt":"idle"}'
+          }
+          trap cleanup EXIT INT TERM HUP
           wf-recorder -o "$FOCUSED_MONITOR" -f "$VIDEO_DIR/$(date +'%Y-%m-%d-%H%M%S.mp4')"
+      fi
+    '';
+  };
+
+  home.file.".local/bin/recording-status" = {
+    executable = true;
+    text = ''
+      #!/bin/sh
+      STATUS_FILE="''${XDG_RUNTIME_DIR:-/tmp}/wf-recorder.status"
+
+      if [ -r "$STATUS_FILE" ]; then
+          cat "$STATUS_FILE"
+      else
+          printf '%s\n' '{"status":"OFF","alt":"idle"}'
       fi
     '';
   };

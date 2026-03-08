@@ -1,4 +1,9 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 {
   home.packages = with pkgs; [
     power-profiles-daemon
@@ -28,8 +33,7 @@
                 "dashboard"
                 "workspaces"
                 "windowtitle"
-                "custom/recording-idle"
-                "custom/recording-active"
+                "custom/recording-status"
                 "custom/vulstat"
                 "storage"
               ]
@@ -89,34 +93,11 @@
   # modules.json の生成と配置
   xdg.configFile."hyprpanel/modules.json".source = pkgs.writeText "modules.json" (
     builtins.toJSON {
-      "custom/recording-idle" = {
+      "custom/recording-status" = {
         icon = "";
-        label = "{}";
-        execute = ''
-          if ! ${pkgs.procps}/bin/pgrep -x wf-recorder > /dev/null; then
-            echo "OFF"
-          else
-            echo ""
-          fi
-        '';
+        label = "{status}";
+        execute = "recording-status";
         interval = 100;
-        hideOnEmpty = true;
-        actions = {
-          onLeftClick = "toggle-recorder";
-        };
-      };
-      "custom/recording-active" = {
-        icon = "";
-        label = "{}";
-        execute = ''
-          if ${pkgs.procps}/bin/pgrep -x wf-recorder > /dev/null; then
-            echo "REC"
-          else
-            echo ""
-          fi
-        '';
-        interval = 100;
-        hideOnEmpty = true;
         actions = {
           onLeftClick = "toggle-recorder";
         };
@@ -133,14 +114,7 @@
   # Custom module styles
   xdg.configFile."hyprpanel/modules.scss".text = ''
     @include styleModule(
-      'cmodule-recording-idle',
-      (
-        'icon-color': #CDD6F4, // Catppuccin Text
-        'text-color': #CDD6F4 // Catppuccin Text
-      )
-    );
-    @include styleModule(
-      'cmodule-recording-active',
+      'cmodule-recording-status',
       (
         'text-color': #F38BA8, // Catppuccin Red
         'icon-color': #F38BA8
@@ -154,6 +128,4 @@
       )
     );
   '';
-
-  
 }
