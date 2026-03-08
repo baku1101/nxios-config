@@ -15,7 +15,7 @@
     ./dconf.nix
     ./rust.nix
     ./wm/hyprland/default.nix
-    nixvim.homeManagerModules.nixvim
+    nixvim.homeModules.nixvim
     ./nixvim/default.nix
   ];
 

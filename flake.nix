@@ -62,7 +62,7 @@
                 fenix.overlays.default
                 (final: prev: {
                   hyprland-plugins = {
-                    hyprbars = hyprland-plugins.packages.${prev.system}.hyprbars;
+                    hyprbars = hyprland-plugins.packages.${prev.stdenv.hostPlatform.system}.hyprbars;
                   };
                 })
                 (final: prev: {

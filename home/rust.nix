@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (inputs.cargo-compete.packages.${pkgs.system}) cargo-compete;
+  inherit (inputs.cargo-compete.packages.${pkgs.stdenv.hostPlatform.system}) cargo-compete;
   cargo-nightly =
     toolchain:
     pkgs.stdenv.mkDerivation {
@@ -63,7 +63,7 @@ in
   home.packages = with pkgs; [
     # faster compiling
     clang
-    mold-wrapped
+    mold
     sccache
 
     # standard rust compiler(rustc and cargo and tools(rustfmt, cargo-clippy, ...))

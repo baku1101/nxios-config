@@ -4,6 +4,11 @@
   lib,
   ...
 }:
+let
+  baseTheme = builtins.fromJSON (
+    builtins.readFile "${pkgs.hyprpanel}/share/themes/catppuccin_mocha.json"
+  );
+in
 {
   home.packages = with pkgs; [
     power-profiles-daemon
@@ -21,7 +26,7 @@
   };
   programs.hyprpanel = {
     enable = true;
-    settings = {
+    settings = baseTheme // {
       "bar.layouts" =
         let
           layout =
@@ -65,28 +70,27 @@
           "3" = layout { };
         };
 
-      theme.name = "catppuccin_mocha";
-      theme.bar.floating = false;
-      theme.bar.buttons.enableBorders = true;
-      theme.bar.transparent = true;
-      theme.font.size = "14px";
-      menus.clock.time.military = true;
-      menus.clock.time.hideSeconds = false;
-      bar.clock.format = "%y/%m/%d  %H:%M";
-      bar.media.show_active_only = true;
-      bar.notifications.show_total = false;
-      theme.bar.buttons.modules.ram.enableBorder = false;
-      bar.launcher.autoDetectIcon = true;
-      bar.battery.hideLabelWhenFull = true;
-      menus.dashboard.controls.enabled = false;
-      menus.dashboard.shortcuts.enabled = true;
-      menus.clock.weather.enabled = true;
-      menus.dashboard.shortcuts.right.shortcut1.command = "${pkgs.gcolor3}/bin/gcolor3";
-      menus.media.displayTime = true;
-      menus.power.lowBatteryNotification = true;
-      bar.volume.rightClick = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
-      bar.volume.middleClick = "pavucontrol";
-      bar.media.format = "{title}";
+      "theme.bar.floating" = false;
+      "theme.bar.buttons.enableBorders" = true;
+      "theme.bar.transparent" = true;
+      "theme.font.size" = "14px";
+      "menus.clock.time.military" = true;
+      "menus.clock.time.hideSeconds" = false;
+      "bar.clock.format" = "%y/%m/%d  %H:%M";
+      "bar.media.show_active_only" = true;
+      "bar.notifications.show_total" = false;
+      "theme.bar.buttons.modules.ram.enableBorder" = false;
+      "bar.launcher.autoDetectIcon" = true;
+      "bar.battery.hideLabelWhenFull" = true;
+      "menus.dashboard.controls.enabled" = false;
+      "menus.dashboard.shortcuts.enabled" = true;
+      "menus.clock.weather.enabled" = true;
+      "menus.dashboard.shortcuts.right.shortcut1.command" = "${pkgs.gcolor3}/bin/gcolor3";
+      "menus.media.displayTime" = true;
+      "menus.power.lowBatteryNotification" = true;
+      "bar.volume.rightClick" = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
+      "bar.volume.middleClick" = "pavucontrol";
+      "bar.media.format" = "{title}";
     };
   };
 
