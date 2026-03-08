@@ -106,7 +106,7 @@
         icon = "󰋼"; # vulnixのアイコン
         label = "{}"; # JSON出力の場合
         execute = "jq '[.[].cvssv3_basescore | to_entries | add | select(.value > 5)] | length' <<< $(vulnix -S --json)";
-        interval = 10000;
+        interval = 600000;
       };
     }
   );
@@ -128,4 +128,5 @@
       )
     );
   '';
+
 }

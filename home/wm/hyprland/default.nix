@@ -73,6 +73,30 @@
     '';
   };
 
+  home.file.".local/bin/memo-popup" = {
+    executable = true;
+    text = ''
+      #!/usr/bin/env bash
+      set -euo pipefail
+
+      SPECIAL="memo"
+      NOTE_DIR="$HOME/Documents/memos"
+      NOTE_FILE="$NOTE_DIR/now.md"
+
+      mkdir -p "$NOTE_DIR"
+      touch "$NOTE_FILE"
+
+      if ! hyprctl -j clients | jq -e --arg workspace "special:$SPECIAL" '.[] | select(.workspace.name == $workspace)' >/dev/null; then
+        SPAWN_ARGS="[workspace special:$SPECIAL;float;size 900 520;center] ghostty -e nvim \"$NOTE_FILE\""
+        hyprctl dispatch exec "$SPAWN_ARGS"
+        # Allow Hyprland to register the client before toggling the workspace
+        sleep 0.3
+      fi
+
+      hyprctl dispatch togglespecialworkspace "$SPECIAL"
+    '';
+  };
+
   home.sessionPath = [
     "$HOME/.local/bin"
   ];

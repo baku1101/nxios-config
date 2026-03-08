@@ -77,9 +77,9 @@
         preserve_split = "yes"; # you probably want this
       };
 
-      gestures = {
-        workspace_swipe = "on";
-      };
+      # gestures = {
+      #   workspace_swipe = "on";
+      # };
 
       misc = {
         force_default_wallpaper = -1; # Set to 0 to disable the anime mascot wallpapers
@@ -143,11 +143,14 @@
         ", Print, exec, grimblast --notify save screen"
         "CTRL, Print, exec, grimblast --notify copy screen"
         "CTRL SHIFT, Print, exec, grimblast --notify copy area"
-        # Screenshot: area save
-        "$mainMod SHIFT, S, exec, grimblast --notify save area"
+        # Screenshot: area save + copy
+        "$mainMod SHIFT, S, exec, grimblast --notify copysave area"
 
         # Clipboard History
         "$mainMod, V, exec, cliphist list | wofi --dmenu | cliphist decode | wl-copy"
+
+        # Quick memo scratchpad
+        "SHIFT, F12, exec, memo-popup"
 
         # Screen recording toggle
         "$mainMod SHIFT, R, exec, toggle-recorder"
